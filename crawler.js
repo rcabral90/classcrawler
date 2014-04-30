@@ -31,7 +31,7 @@ casper.start(url, function() {
     this.test.assertExists('form#Form1', 'form is found');
     this.fill('form#Form1', { 
         Username: 'username', 
-        Password:  'password'
+        Password:  'password!!'
     }, false);
 });
 
@@ -44,94 +44,41 @@ casper.thenOpen('https://mycsuf-ng.fullerton.edu/psp/pfulprd/EMPLOYEE/HFULPRD/c/
 
 casper.withFrame('TargetContent', function() {
     
-					// Make sure Enroll exists before clicking
+	// Make sure Search exists before clicking
     this.test.assertExists(
-        {type: 'xpath', path: '//*[@id="DERIVED_SSS_SCR_SSS_LINK_ANCHOR1"]' },
+        {type: 'xpath', path: '//*[@id="DERIVED_SSS_SCL_SSS_GO_4$193$"]' },
         'the element exists'
     );
     
-    console.log("Clicking Enroll");
+    console.log("Clicking Search");
     
-   					 // Clicks on enroll
-    casper.thenClick(x('//*[@id="DERIVED_SSS_SCR_SSS_LINK_ANCHOR1"]'), function() {
+   	// Clicks on search
+    casper.thenClick(x('//*[@id="DERIVED_SSS_SCL_SSS_GO_4$193$"]'), function() {
         console.log("Woop!");
     });  
     
 	this.wait(5000, function() {
     	this.echo("I've waited for a second.");
-    	this.capture('cart.png');
+    	this.capture('search.png');
     });
 
+    // Selecting CPSC 
+       casper.then(function(){
+        casper.evaluate(function() {
+            var y_select = document.getElementById("SSR_CLSRCH_WRK_SUBJECT$0").value = "CPSC"; //select option you're needed
+        }); 
+    }); 
 
-					// Make sure Search exists before clicking    
-    this.test.assertExists(
-        {type: 'xpath', path: '//*[@id="DERIVED_SSS_SCR_SSS_LINK_ANCHOR1"]' },
-        'the element exists'
-    );
-    
-    				// clicking on Search    
-    casper.thenClick(x('//*[@id="DERIVED_REGFRM1_SSR_PB_SRCH"]'), function() {
-        console.log("Woop!");
-    });  
-    
-
-
-    this.wait(5000, function() {
-        this.echo("I've waited for a second.");
-        this.capture('enroll.png');
-    });
-    
-/*  DOES NOT WORK YET? FILL BY CHILDREN 
-   casper.then(function(){
-    casper.evaluate(function() {
-        var x_unselect = document.getElementById("SSR_CLSRCH_WRK_SUBJECT$0").children[1]; //making "Choisir une mairie" option unselected
-        x_unselect.setAttribute("selected", false);
-
-        var y_select = document.getElementById("SSR_CLSRCH_WRK_SUBJECT$0").children[24]; //select option you're needed
-        y_select.setAttribute("selected", "selected");
-    });
-});
-casper.then(function() {
-    this.captureSelector("result.png", "html");
-}); 
-*/
-
-
-/*  DOES NOT WORK YET? FILL BY SELECTED TEXT
-casper.fillSelectOptionByText = function (selectSelector,text){
-    this.evaluate(function(sel,setByText) {
-        $(sel + " > option").each(function() {
-            if($(this).text() === setByText) {
-                $(this).attr('selected', 'selected');            
-            }                        
+    // Clicking on Search    
+        casper.thenClick(x('//*[@id="CLASS_SRCH_WRK2_SSR_PB_CLASS_SRCH"]'), function() {
+            console.log("Woop!");
+        });  
+            this.wait(5000, function() {
+            this.echo("I've waited for a second.");
+            this.capture('cpsc list.png');
         });
-    },selectSelector,text);
-};
 
-// Fill in the list box
-this.fillSelectOptionByText("select[name='SSR_CLSRCH_WRK_SUBJECT$0']", "CPSC");
-*/
-
-    				// clicking on Search    
-    casper.thenClick(x('//*[@id="CLASS_SRCH_WRK2_SSR_PB_CLASS_SRCH"]'), function() {
-        console.log("Woop!");
-    });  
-        this.wait(5000, function() {
-        this.echo("I've waited for a second.");
-        this.capture('cpsc list.png');
-    });
-
-
-}); // end
-
-/*
-casper.withFrame('TargetContent', function() {
-    
-
-    
-  
-});
-*/
+}); 
 
 casper.thenEvaluate(function(){
     console.log("Page Title " + document.title);
