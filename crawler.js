@@ -65,9 +65,26 @@ casper.withFrame('TargetContent', function() {
     // Selecting CPSC 
        casper.then(function(){
         casper.evaluate(function() {
-            var y_select = document.getElementById("SSR_CLSRCH_WRK_SUBJECT$0").value = "CPSC"; //select option you're needed
+            var courses = document.getElementById("SSR_CLSRCH_WRK_SUBJECT$0").value = "CPSC"; //select option you're needed
+        }); 
+    });
+
+    // Deselect "Show open classes only" box 
+        casper.thenClick(x('//*[@id="SSR_CLSRCH_WRK_SSR_OPEN_ONLY$3"]'), function() {
+            console.log("Woop!");
+        });  
+
+    // Selecting Undergraduate 
+       casper.then(function(){
+        casper.evaluate(function() {
+            var courses = document.getElementById("SSR_CLSRCH_WRK_ACAD_CAREER$2").value = "UGRD"; //select option you're needed
         }); 
     }); 
+
+        this.wait(5000, function() {
+            this.echo("I've waited for a second.");
+            this.capture('search_filled.png');
+        }); 
 
     // Clicking on Search    
         casper.thenClick(x('//*[@id="CLASS_SRCH_WRK2_SSR_PB_CLASS_SRCH"]'), function() {
@@ -78,7 +95,20 @@ casper.withFrame('TargetContent', function() {
             this.capture('cpsc list.png');
         });
 
+    // Clicking "show more than 50 OK"
+        casper.thenClick(x('//*[@id="#ICSave"]'), function() {
+            console.log("Clicking Ok for Show more than 50!");
+        });
+            this.wait(5000, function() {
+            this.echo("I've waited for a second.");
+            this.capture('cpsc list.png');
+        });  
+
 }); 
+
+
+
+
 
 casper.thenEvaluate(function(){
     console.log("Page Title " + document.title);
