@@ -30,8 +30,8 @@ casper.start(url, function() {
     console.log("page loaded");
     this.test.assertExists('form#Form1', 'form is found');
     this.fill('form#Form1', { 
-        Username: 'username', 
-        Password:  'password!!'
+        Username: 'Username', 
+        Password:  'Password'
     }, false);
 });
 
@@ -74,10 +74,17 @@ casper.withFrame('TargetContent', function() {
             console.log("Woop!");
         });  
 
-    // Selecting Undergraduate 
+    // Selecting Matching Greater than
        casper.then(function(){
         casper.evaluate(function() {
-            var courses = document.getElementById("SSR_CLSRCH_WRK_ACAD_CAREER$2").value = "UGRD"; //select option you're needed
+            var courses = document.getElementById("SSR_CLSRCH_WRK_SSR_EXACT_MATCH1$1").value = "G"; //select option you're needed
+        }); 
+    }); 
+
+    // Input 0 
+       casper.then(function(){
+        casper.evaluate(function() {
+            var courses = document.getElementById("SSR_CLSRCH_WRK_CATALOG_NBR$1").value = 0 ; //select option you're needed
         }); 
     }); 
 
@@ -90,7 +97,7 @@ casper.withFrame('TargetContent', function() {
         casper.thenClick(x('//*[@id="CLASS_SRCH_WRK2_SSR_PB_CLASS_SRCH"]'), function() {
             console.log("Woop!");
         });  
-            this.wait(5000, function() {
+            this.wait(6000, function() {
             this.echo("I've waited for a second.");
             this.capture('cpsc list.png');
         });
@@ -99,7 +106,7 @@ casper.withFrame('TargetContent', function() {
         casper.thenClick(x('//*[@id="#ICSave"]'), function() {
             console.log("Clicking Ok for Show more than 50!");
         });
-            this.wait(5000, function() {
+            this.wait(6000, function() {
             this.echo("I've waited for a second.");
             this.capture('cpsc list.png');
         });  
