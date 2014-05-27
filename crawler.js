@@ -28,10 +28,10 @@ var url = 'https://my.fullerton.edu/portalvsvb/csulogonuser.aspx?posted=1';
 casper.start(url, function() {
     // search for 'casperjs' from google form
     console.log("page loaded");
-    this.test.assertExists('form#Form1', 'form is found');
+ 
     this.fill('form#Form1', { 
-        Username: 'Username', 
-        Password:  'Password'
+        Username: '', 
+        Password:  ''
     }, false);
 });
 
@@ -41,26 +41,7 @@ casper.then(function clickButton() {
 
 casper.thenOpen('https://my.fullerton.edu/PortalVSVB/PortalPSoftLoginTOnline/CSUPsoft.aspx');
 casper.thenOpen('https://mycsuf-ng.fullerton.edu/psp/pfulprd/EMPLOYEE/HFULPRD/c/SA_LEARNER_SERVICES.SSS_STUDENT_CENTER.GBL?PORTALPARAM_PTCNAV=FUL_POC_HC_SSS_STUDENT_CENTER&EOPP.SCNode=EMPL&EOPP.SCPortal=EMPLOYEE&EOPP.SCName=FUL_STUDENT_CENTER&EOPP.SCLabel=Student%20Center&EOPP.SCPTcname=&FolderPath=PORTAL_ROOT_OBJECT.PORTAL_BASE_DATA.CO_NAVIGATION_COLLECTIONS.FUL_STUDENT_CENTER.FUL_S200711261443438320871608&IsFolder=false');
-
-casper.withFrame('TargetContent', function() {
-    
-	// Make sure Search exists before clicking
-    this.test.assertExists(
-        {type: 'xpath', path: '//*[@id="DERIVED_SSS_SCL_SSS_GO_4$193$"]' },
-        'the element exists'
-    );
-    
-    console.log("Clicking Search");
-    
-   	// Clicks on search
-    casper.thenClick(x('//*[@id="DERIVED_SSS_SCL_SSS_GO_4$193$"]'), function() {
-        console.log("Woop!");
-    });  
-    
-	this.wait(5000, function() {
-    	this.echo("I've waited for a second.");
-    	this.capture('search.png');
-    });
+casper.thenOpen('https://cmsweb.fullerton.edu/psc/HFULPRD/EMPLOYEE/HFULPRD/c/SA_LEARNER_SERVICES.CLASS_SEARCH.GBL?Page=SSR_CLSRCH_ENTRY&Action=U&TargetFrameName=None');
 
     // Selecting CPSC 
        casper.then(function(){
@@ -87,34 +68,45 @@ casper.withFrame('TargetContent', function() {
             var courses = document.getElementById("SSR_CLSRCH_WRK_CATALOG_NBR$1").value = 0 ; //select option you're needed
         }); 
     }); 
-
+casper.then(function(){
         this.wait(5000, function() {
             this.echo("I've waited for a second.");
             this.capture('search_filled.png');
         }); 
-
+    }); 
     // Clicking on Search    
         casper.thenClick(x('//*[@id="CLASS_SRCH_WRK2_SSR_PB_CLASS_SRCH"]'), function() {
             console.log("Woop!");
         });  
+     casper.then(function(){   
             this.wait(6000, function() {
             this.echo("I've waited for a second.");
             this.capture('cpsc list.png');
         });
+             });
 
     // Clicking "show more than 50 OK"
         casper.thenClick(x('//*[@id="#ICSave"]'), function() {
             console.log("Clicking Ok for Show more than 50!");
         });
-            this.wait(6000, function() {
+        casper.then(function(){  
+            this.wait(8500, function() {
             this.echo("I've waited for a second.");
             this.capture('cpsc list.png');
         });  
+             });
 
-}); 
+    //Print the first class name
 
+       casper.then(function(){
+        casper.evaluate(function() {
+                var tableofcourses = document.getElementById("ACE_$ICField236$0");
+                return Array.prototype.map.call(tableofcourses, function(e) {
+                console.log("this the table contents: ", e.innerText); // let's get node text instead of HTMLelement!
+            });
 
-
+        }); 
+    });
 
 
 casper.thenEvaluate(function(){
