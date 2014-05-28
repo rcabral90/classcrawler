@@ -1,3 +1,11 @@
+//////////////////////////////////////////////////////////////////////////////
+// Robert Cabral
+// Chris Doan
+// Titan Class Crawler
+// 5-27-14
+// Purpose: To crawl the titan portal to display classes, and then auto enroll in classes for an easy registration process.
+//////////////////////////////////////////////////////////////////////////////
+
 var x = require('casper').selectXPath;
 var firstUrl;
 var casper = require('casper').create({   
@@ -30,8 +38,8 @@ casper.start(url, function() {
     console.log("page loaded");
  
     this.fill('form#Form1', { 
-        Username: '', 
-        Password:  ''
+        Username: 'cdoan', 
+        Password:  'Totoro3109'
     }, false);
 });
 
@@ -78,23 +86,38 @@ casper.then(function(){
         casper.thenClick(x('//*[@id="CLASS_SRCH_WRK2_SSR_PB_CLASS_SRCH"]'), function() {
             console.log("Woop!");
         });  
-     casper.then(function(){   
-            this.wait(6000, function() {
-            this.echo("I've waited for a second.");
-            this.capture('cpsc list.png');
-        });
-             });
 
-    // Clicking "show more than 50 OK"
-        casper.thenClick(x('//*[@id="#ICSave"]'), function() {
-            console.log("Clicking Ok for Show more than 50!");
-        });
-        casper.then(function(){  
-            this.wait(8500, function() {
-            this.echo("I've waited for a second.");
-            this.capture('cpsc list.png');
-        });  
-             });
+
+
+// Clicking "show more than 50 OK" 
+casper.then(function(){
+        if(casper.exists('#ICSave')){
+            this.echo('There are more than 50 courses.');
+
+            // CLick on the "Show more than 50" courses.
+            casper.thenClick(x('//*[@id="#ICSave"]'), function() {
+                console.log("Clicking Ok for Show more than 50!");
+            });
+            casper.then(function(){  
+                this.wait(8500, function() {
+                this.echo("I've waited for a second.");
+                this.capture('cpsc list.png');
+            });  
+                 });
+
+        } else {
+            this.echo('There are less than 50 courses.');
+            casper.then(function(){   
+                    this.wait(8500, function() {
+                    this.echo("I've waited for a second.");
+                    this.capture('cpsc list.png');
+                });
+            });
+        }
+
+    });
+
+
 
     //Print the first class name
 
