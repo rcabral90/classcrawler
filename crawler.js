@@ -121,17 +121,18 @@ casper.then(function(){
 
     //Print all classes name
        casper.then(function(){
-       
-        casper.evaluate(function() {
-             for (var i = 0; i < document.getElementsByClassName("SSSHYPERLINKBOLD").length; i++) { 
-            courseName = document.getElementById("DERIVED_CLSRCH_DESCR200$"+i).innerText;
-            coursesInfo = document.getElementById("ACE_$ICField244$"+i).innerText;
-            console.log("Class Name is: " + courseName);
-            console.log("Class Information is: " + coursesInfo);
-              }
-                    }); 
-  
-    });
+            casper.evaluate(function() {
+            for (var i = 0; i < document.getElementsByClassName("SSSHYPERLINKBOLD").length; i++) { 
+                courseName = document.getElementById("DERIVED_CLSRCH_DESCR200$"+i).innerText;
+                coursesCount = document.getElementById("win0div$ICField244GP$"+i).innerText.split("-")[1].split(" ")[0];
+                console.log("Class Name is: " + courseName);
+                for (var j = 0; j <= coursesCount; j++) { 
+                        console.log("Section Count is: " + j);
+                        console.log("Class Information is: " + document.getElementById("trSSR_CLSRCH_MTG1$"+j+"_row1").innerText);
+                }
+            }
+            });
+        });
 
 casper.thenEvaluate(function(){
     console.log("Page Title " + document.title);
