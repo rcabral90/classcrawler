@@ -19,6 +19,8 @@ var casper = require('casper').create({
       loadPlugins: false         // use these settings
     }
 });
+var u = casper.cli.get('u');
+var p = casper.cli.get('p');
 
 // print out all the messages in the headless browser context
 casper.on('remote.message', function(msg) {
