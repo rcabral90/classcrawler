@@ -93,7 +93,7 @@ casper.thenOpen('https://cmsweb.fullerton.edu/psc/HFULPRD/EMPLOYEE/HFULPRD/c/SA_
 
 // Clicking "show more than 50 OK" 
 casper.then(function(){
-        if(this.exists('#PSPUSHBUTTON')){
+        if(this.exists('input.PSPUSHBUTTONTBOK')){
             this.echo('There are more than 50 courses.');
 
             // CLick on the "Show more than 50" courses.
