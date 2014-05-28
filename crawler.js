@@ -46,6 +46,17 @@ casper.then(function clickButton() {
 
 casper.thenOpen('https://my.fullerton.edu/PortalVSVB/PortalPSoftLoginTOnline/CSUPsoft.aspx');
 casper.thenOpen('https://mycsuf-ng.fullerton.edu/psp/pfulprd/EMPLOYEE/HFULPRD/c/SA_LEARNER_SERVICES.SSS_STUDENT_CENTER.GBL?PORTALPARAM_PTCNAV=FUL_POC_HC_SSS_STUDENT_CENTER&EOPP.SCNode=EMPL&EOPP.SCPortal=EMPLOYEE&EOPP.SCName=FUL_STUDENT_CENTER&EOPP.SCLabel=Student%20Center&EOPP.SCPTcname=&FolderPath=PORTAL_ROOT_OBJECT.PORTAL_BASE_DATA.CO_NAVIGATION_COLLECTIONS.FUL_STUDENT_CENTER.FUL_S200711261443438320871608&IsFolder=false');
+
+/*
+    // Find Enrollment Dates
+        casper.then(function(){
+        casper.evaluate(function() {
+            var enrollment_date = document.getElementById('win0divCSU_EA_DISPLAY').getElementById('win0divCSU_EXEC_DUMMY$0').getElementById('trCSU_EXEC_DUMMY$0_row4').getElementById('win0divCSU_EA_LINK$3').getElementsByTagName('span');
+            console.log("Enrollment Date: " + enrollment_date + "\n");
+            });    
+        });
+*/
+
 casper.thenOpen('https://cmsweb.fullerton.edu/psc/HFULPRD/EMPLOYEE/HFULPRD/c/SA_LEARNER_SERVICES.CLASS_SEARCH.GBL?Page=SSR_CLSRCH_ENTRY&Action=U&TargetFrameName=None');
 
     // Selecting CPSC 
@@ -55,12 +66,14 @@ casper.thenOpen('https://cmsweb.fullerton.edu/psc/HFULPRD/EMPLOYEE/HFULPRD/c/SA_
         }); 
     });
 
+/*
     // Selecting Spring 2014
        casper.then(function(){
         casper.evaluate(function() {
             var courses = document.getElementById("CLASS_SRCH_WRK2_STRM$44$").value = "2143"; //select option you're needed
         }); 
     }); 
+*/
 
     // Deselect "Show open classes only" box 
         casper.thenClick(x('//*[@id="SSR_CLSRCH_WRK_SSR_OPEN_ONLY$3"]'), function() {
