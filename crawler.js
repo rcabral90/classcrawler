@@ -54,6 +54,13 @@ casper.thenOpen('https://cmsweb.fullerton.edu/psc/HFULPRD/EMPLOYEE/HFULPRD/c/SA_
         }); 
     });
 
+    // Selecting Spring 2014
+       casper.then(function(){
+        casper.evaluate(function() {
+            var courses = document.getElementById("CLASS_SRCH_WRK2_STRM$44$").value = "2143"; //select option you're needed
+        }); 
+    }); 
+
     // Deselect "Show open classes only" box 
         casper.thenClick(x('//*[@id="SSR_CLSRCH_WRK_SSR_OPEN_ONLY$3"]'), function() {
             console.log("Woop!");
@@ -122,15 +129,42 @@ casper.then(function(){
     //Print all classes name
        casper.then(function(){
             casper.evaluate(function() {
+            // Classes increment from 0 - 149 for Spring Semester, this will go through every course indicated by J
+            var j = 0;
+            var iterating_courses = 0;
+            var section_count = 0;
+
             for (var i = 0; i < document.getElementsByClassName("SSSHYPERLINKBOLD").length; i++) { 
-                courseName = document.getElementById("DERIVED_CLSRCH_DESCR200$"+i).innerText;
-                coursesCount = document.getElementById("win0div$ICField244GP$"+i).innerText.split("-")[1].split(" ")[0];
+                // Get the Course Name 
+                var courseName = document.getElementById("DERIVED_CLSRCH_DESCR200$"+i).innerText;
+                
+                // Provides the means for getting course count.
+                var split = document.getElementById("win0div$ICField244GP$"+i).innerText.split("of")[1];
+                
+                // Take the first two values of the split text, which includes the number of sections of each class
+                var coursesCount = parseInt(split[1] + split[2]);
+
+                // Print the number of courses.
+                console.log("courses count: " + coursesCount);
+
+                // Print the name of the course.
                 console.log("Class Name is: " + courseName);
-                for (var j = 0; j <= coursesCount; j++) { 
-                        console.log("Section Count is: " + j);
+
+                // Count the iterating courses
+                iterating_courses = parseInt(iterating_courses) + parseInt(coursesCount);
+
+                // Print the max number of courses
+                console.log("Max classes: " + iterating_courses);
+
+                // Start the For loop of doooooooomm
+                for (j; j < iterating_courses; j++) { 
+                        section_count++;
+                        console.log("Section Count is: " + section_count);
                         console.log("Class Information is: " + document.getElementById("trSSR_CLSRCH_MTG1$"+j+"_row1").innerText);
                 }
-            }
+                section_count = 0;
+            } // End First For loop!
+
             });
         });
 
