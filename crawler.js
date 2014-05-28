@@ -32,6 +32,7 @@ casper.start(url, function() {
     // search for 'casperjs' from google form
     console.log("page loaded");
  
+
     this.fill('form#Form1', { 
         Username: u, 
         Password: p
@@ -103,12 +104,16 @@ casper.thenOpen('https://cmsweb.fullerton.edu/psc/HFULPRD/EMPLOYEE/HFULPRD/c/SA_
         });  
              });
 
-    //Print the first class name
+    //Print all classes name
        casper.then(function(){
+       
         casper.evaluate(function() {
-            courseName = document.getElementById("DERIVED_CLSRCH_DESCR200$0").innerText;
+             for (var i = 0; i < document.getElementsByClassName("SSSHYPERLINKBOLD").length; i++) { 
+            courseName = document.getElementById("DERIVED_CLSRCH_DESCR200$"+i).innerText;
             console.log("Class Name is: " + courseName);
+              }
                     }); 
+  
     });
 
 casper.thenEvaluate(function(){
