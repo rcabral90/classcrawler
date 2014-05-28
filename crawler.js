@@ -1,6 +1,7 @@
+var colorizer = require('colorizer').create('Colorizer');
 var x = require('casper').selectXPath;
 var firstUrl;
-var casper = require('casper').create({   
+var casper = require('casper').create({  
     waitTimeout: 15000,
     stepTimeout: 15000,
     verbose: true,
@@ -129,6 +130,7 @@ casper.then(function(){
     //Print all classes name
        casper.then(function(){
             casper.evaluate(function() {
+
             // Classes increment from 0 - 149 for Spring Semester, this will go through every course indicated by J
             var j = 0;
             var iterating_courses = 0;
@@ -144,20 +146,27 @@ casper.then(function(){
                 // Take the first two values of the split text, which includes the number of sections of each class
                 var coursesCount = parseInt(split[1] + split[2]);
 
-                // Print the name of the course.
-                console.log("Class Name is: " + courseName);
-
                 // Count the iterating courses
                 iterating_courses = parseInt(iterating_courses) + parseInt(coursesCount);
 
-                // Print the max number of courses
-                console.log("Sections: " + coursesCount);
+                // Print the name of the course and sections
+                console.log("\nCourse Name is: " + courseName + "\nSections: " + coursesCount + "\n");
 
                 // Start the For loop of doooooooomm
                 for (j; j < iterating_courses; j++) { 
                         section_count++;
-                        console.log("Section Count is: " + section_count);
-                        console.log("Class Information is: " + document.getElementById("trSSR_CLSRCH_MTG1$"+j+"_row1").innerText);
+                        var class_section = document.getElementById("DERIVED_CLSRCH_SSR_CLASSNAME_LONG$"+j).innerText;
+                        var class_information = document.getElementById("trSSR_CLSRCH_MTG1$"+j+"_row1").innerText.split("\n");
+                        var class_status = document.getElementById("win0divDERIVED_CLSRCH_SSR_STATUS_LONG$"+j).getElementsByTagName('img')[0].getAttribute('alt'); 
+                        
+                        //document.images("win0divDERIVED_CLSRCH_SSR_STATUS_LONG$"+j).alt;
+                        var class_time = class_information[0];
+                        var class_room = class_information[1];
+                        var class_instructor = class_information[2];
+                        var class_dates = class_information[3];
+
+                        console.log("\nClass Information \n\tSection Count is: " + section_count + "\n\tClass Section: " + class_section +"\n\tClass Status: " + class_status + "\n\tClass Time: " + class_time + "\n\tClass Room: " + class_room + "\n\tClass Instructor: " + class_instructor + "\n\tClass Dates: " + class_dates + "\n");
+
                 }
                 section_count = 0;
             } // End First For loop!
