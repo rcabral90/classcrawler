@@ -144,11 +144,8 @@ casper.then(function(){
                 // Take the first two values of the split text, which includes the number of sections of each class
                 var coursesCount = parseInt(split[1] + split[2]);
 
-                // Print the number of courses.
-                console.log("courses count: " + coursesCount);
-
                 // Print the name of the course.
-                console.log("Class Name is: " + courseName);
+                console.log("Class Name is: " + courseName + "Sections: " + coursesCount);
 
                 // Count the iterating courses
                 iterating_courses = parseInt(iterating_courses) + parseInt(coursesCount);
