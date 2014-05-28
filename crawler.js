@@ -146,6 +146,12 @@ casper.then(function(){
                 // Take the first two values of the split text, which includes the number of sections of each class
                 var coursesCount = parseInt(split[1] + split[2]);
 
+<<<<<<< HEAD
+=======
+                // Print the name of the course.
+                console.log("Class Name is: " + courseName + "Sections: " + coursesCount);
+
+>>>>>>> afaf0bd7f5874dd09fe71b6e38abb69fae61bfd9
                 // Count the iterating courses
                 iterating_courses = parseInt(iterating_courses) + parseInt(coursesCount);
 
@@ -165,7 +171,7 @@ casper.then(function(){
                         var class_instructor = class_information[2];
                         var class_dates = class_information[3];
 
-                        console.log("\nClass Information \n\tSection Count is: " + section_count + "\n\tClass Section: " + class_section +"\n\tClass Status: " + class_status + "\n\tClass Time: " + class_time + "\n\tClass Room: " + class_room + "\n\tClass Instructor: " + class_instructor + "\n\tClass Dates: " + class_dates + "\n");
+                        console.log("\nClass Information \n\tSection Count: " + section_count + "\n\tClass Section: " + class_section +"\n\tClass Status: " + class_status + "\n\tClass Time: " + class_time + "\n\tClass Room: " + class_room + "\n\tClass Instructor: " + class_instructor + "\n\tClass Dates: " + class_dates + "\n");
 
                 }
                 section_count = 0;
