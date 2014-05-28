@@ -1,11 +1,3 @@
-//////////////////////////////////////////////////////////////////////////////
-// Robert Cabral
-// Chris Doan
-// Titan Class Crawler
-// 5-27-14
-// Purpose: To crawl the titan portal to display classes, and then auto enroll in classes for an easy registration process.
-//////////////////////////////////////////////////////////////////////////////
-
 var x = require('casper').selectXPath;
 var firstUrl;
 var casper = require('casper').create({   
@@ -19,8 +11,10 @@ var casper = require('casper').create({
       loadPlugins: false         // use these settings
     }
 });
-var u = casper.cli.get('u');
-var p = casper.cli.get('p');
+
+var u = casper.cli.get('u')
+var p = casper.cli.get('p')
+
 
 // print out all the messages in the headless browser context
 casper.on('remote.message', function(msg) {
@@ -38,9 +32,9 @@ casper.start(url, function() {
     // search for 'casperjs' from google form
     console.log("page loaded");
  
-    this.echo('Usage: casperjs crawler.js --u=Username --p=Password')
+
     this.fill('form#Form1', { 
-        Username: u,
+        Username: u, 
         Password: p
     }, false);
 });
@@ -78,7 +72,7 @@ casper.thenOpen('https://cmsweb.fullerton.edu/psc/HFULPRD/EMPLOYEE/HFULPRD/c/SA_
             var courses = document.getElementById("SSR_CLSRCH_WRK_CATALOG_NBR$1").value = 0 ; //select option you're needed
         }); 
     }); 
-casper.then(function(){
+    casper.then(function(){
         this.wait(5000, function() {
             this.echo("I've waited for a second.");
             this.capture('search_filled.png');
@@ -87,54 +81,58 @@ casper.then(function(){
     // Clicking on Search    
         casper.thenClick(x('//*[@id="CLASS_SRCH_WRK2_SSR_PB_CLASS_SRCH"]'), function() {
             console.log("Woop!");
-        });  
+        }); 
 
+     casper.then(function(){   
+            this.wait(8500, function() {
+            this.echo("I've waited for a second.");
+            this.capture('cpsc list.png');
+        });
+             });
 
 
 // Clicking "show more than 50 OK" 
 casper.then(function(){
-        if(casper.exists('#ICSave')){
+        if(this.exists('input.PSPUSHBUTTONTBOK')){
             this.echo('There are more than 50 courses.');
 
             // CLick on the "Show more than 50" courses.
             casper.thenClick(x('//*[@id="#ICSave"]'), function() {
-                console.log("Clicking Ok for Show more than 50!");
+                console.log("Clicking Ok for Show more than 50!");
             });
-
-            // Print out a picture of available classes.
             casper.then(function(){  
                 this.wait(8500, function() {
                 this.echo("I've waited for a second.");
                 this.capture('cpsc list.png');
-            });  
+            });  
                  });
 
-        } // End If 
-        else {
+        } else {
             this.echo('There are less than 50 courses.');
-
-            // Print out a picture of available classes.
             casper.then(function(){   
                     this.wait(8500, function() {
                     this.echo("I've waited for a second.");
                     this.capture('cpsc list.png');
                 });
             });
-        } // End else
+        }
 
     });
 
-    //Print the first class name
+    //Print all classes name
        casper.then(function(){
-        casper.evaluate(function() {
-                var tableofcourses = document.getElementById("ACE_$ICField236$0");
-                return Array.prototype.map.call(tableofcourses, function(e) {
-                console.log("this the table contents: ", e.innerText); // let's get node text instead of HTMLelement!
+            casper.evaluate(function() {
+            for (var i = 0; i < document.getElementsByClassName("SSSHYPERLINKBOLD").length; i++) { 
+                courseName = document.getElementById("DERIVED_CLSRCH_DESCR200$"+i).innerText;
+                coursesCount = document.getElementById("win0div$ICField244GP$"+i).innerText.split("-")[1].split(" ")[0];
+                console.log("Class Name is: " + courseName);
+                for (var j = 0; j <= coursesCount; j++) { 
+                        console.log("Section Count is: " + j);
+                        console.log("Class Information is: " + document.getElementById("trSSR_CLSRCH_MTG1$"+j+"_row1").innerText);
+                }
+            }
             });
-
-        }); 
-    });
-
+        });
 
 casper.thenEvaluate(function(){
     console.log("Page Title " + document.title);
