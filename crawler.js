@@ -20,10 +20,6 @@ var casper = require('casper').create({
     }
 });
 
-var u = casper.cli.get('u')
-var p = casper.cli.get('p')
-
-
 // print out all the messages in the headless browser context
 casper.on('remote.message', function(msg) {
     this.echo('remote message caught: ' + msg);
@@ -40,9 +36,10 @@ casper.start(url, function() {
     // search for 'casperjs' from google form
     console.log("page loaded");
  
+    this.echo('Usage: casperjs crawler.js --u=Username --p=Password')
     this.fill('form#Form1', { 
-        Username: '', 
-        Password:  ''
+        Username: casper.cli.get('u'), 
+        Password: casper.cli.get('p')
     }, false);
 });
 
@@ -101,6 +98,8 @@ casper.then(function(){
             casper.thenClick(x('//*[@id="#ICSave"]'), function() {
                 console.log("Clicking Ok for Show more than 50!");
             });
+
+            // Print out a picture of available classes.
             casper.then(function(){  
                 this.wait(8500, function() {
                 this.echo("I've waited for a second.");
@@ -108,22 +107,22 @@ casper.then(function(){
             });  
                  });
 
-        } else {
+        } // End If 
+        else {
             this.echo('There are less than 50 courses.');
+
+            // Print out a picture of available classes.
             casper.then(function(){   
                     this.wait(8500, function() {
                     this.echo("I've waited for a second.");
                     this.capture('cpsc list.png');
                 });
             });
-        }
+        } // End else
 
     });
 
-
-
     //Print the first class name
-
        casper.then(function(){
         casper.evaluate(function() {
                 var tableofcourses = document.getElementById("ACE_$ICField236$0");
