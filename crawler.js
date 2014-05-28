@@ -20,10 +20,6 @@ var casper = require('casper').create({
     }
 });
 
-var u = casper.cli.get('u')
-var p = casper.cli.get('p')
-
-
 // print out all the messages in the headless browser context
 casper.on('remote.message', function(msg) {
     this.echo('remote message caught: ' + msg);
@@ -40,9 +36,10 @@ casper.start(url, function() {
     // search for 'casperjs' from google form
     console.log("page loaded");
  
+    this.echo('Usage: casperjs crawler.js --u=Username --p=Password')
     this.fill('form#Form1', { 
-        Username: '', 
-        Password:  ''
+        Username: casper.cli.get('u'), 
+        Password: casper.cli.get('p')
     }, false);
 });
 
