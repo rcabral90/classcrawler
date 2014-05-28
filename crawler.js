@@ -91,18 +91,33 @@ casper.thenOpen('https://cmsweb.fullerton.edu/psc/HFULPRD/EMPLOYEE/HFULPRD/c/SA_
              });
 
 
-    // Clicking "show more than 50 OK"
-        casper.thenClick(x('//*[@id="#ICSave"]'), function() {
-            console.log("Clicking Ok for Show more than 50!");
-        });
+// Clicking "show more than 50 OK" 
+casper.then(function(){
+        if(casper.exists('#ICSave')){
+            this.echo('There are more than 50 courses.');
 
+            // CLick on the "Show more than 50" courses.
+            casper.thenClick(x('//*[@id="#ICSave"]'), function() {
+                console.log("Clicking Ok for Show more than 50!");
+            });
+            casper.then(function(){  
+                this.wait(8500, function() {
+                this.echo("I've waited for a second.");
+                this.capture('cpsc list.png');
+            });  
+                 });
 
-        casper.then(function(){  
-            this.wait(8500, function() {
-            this.echo("I've waited for a second.");
-            this.capture('cpsc list.png');
-        });  
-             });
+        } else {
+            this.echo('There are less than 50 courses.');
+            casper.then(function(){   
+                    this.wait(8500, function() {
+                    this.echo("I've waited for a second.");
+                    this.capture('cpsc list.png');
+                });
+            });
+        }
+
+    });
 
     //Print all classes name
        casper.then(function(){
