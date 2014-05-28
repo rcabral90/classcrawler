@@ -68,7 +68,7 @@ casper.thenOpen('https://cmsweb.fullerton.edu/psc/HFULPRD/EMPLOYEE/HFULPRD/c/SA_
             var courses = document.getElementById("SSR_CLSRCH_WRK_CATALOG_NBR$1").value = 0 ; //select option you're needed
         }); 
     }); 
-casper.then(function(){
+    casper.then(function(){
         this.wait(5000, function() {
             this.echo("I've waited for a second.");
             this.capture('search_filled.png');
@@ -77,18 +77,22 @@ casper.then(function(){
     // Clicking on Search    
         casper.thenClick(x('//*[@id="CLASS_SRCH_WRK2_SSR_PB_CLASS_SRCH"]'), function() {
             console.log("Woop!");
-        });  
+        }); 
+
      casper.then(function(){   
-            this.wait(6000, function() {
+            this.wait(8500, function() {
             this.echo("I've waited for a second.");
             this.capture('cpsc list.png');
         });
              });
 
+
     // Clicking "show more than 50 OK"
         casper.thenClick(x('//*[@id="#ICSave"]'), function() {
             console.log("Clicking Ok for Show more than 50!");
         });
+
+
         casper.then(function(){  
             this.wait(8500, function() {
             this.echo("I've waited for a second.");
@@ -97,17 +101,12 @@ casper.then(function(){
              });
 
     //Print the first class name
-
        casper.then(function(){
         casper.evaluate(function() {
-                var tableofcourses = document.getElementById("ACE_$ICField236$0");
-                return Array.prototype.map.call(tableofcourses, function(e) {
-                console.log("this the table contents: ", e.innerText); // let's get node text instead of HTMLelement!
-            });
-
-        }); 
+            courseName = document.getElementById("DERIVED_CLSRCH_DESCR200$0").innerText;
+            console.log("Class Name is: " + courseName);
+                    }); 
     });
-
 
 casper.thenEvaluate(function(){
     console.log("Page Title " + document.title);
