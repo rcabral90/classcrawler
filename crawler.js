@@ -144,9 +144,6 @@ casper.then(function(){
                 // Take the first two values of the split text, which includes the number of sections of each class
                 var coursesCount = parseInt(split[1] + split[2]);
 
-                // Print the number of courses.
-                console.log("courses count: " + coursesCount);
-
                 // Print the name of the course.
                 console.log("Class Name is: " + courseName);
 
@@ -154,7 +151,7 @@ casper.then(function(){
                 iterating_courses = parseInt(iterating_courses) + parseInt(coursesCount);
 
                 // Print the max number of courses
-                console.log("Max classes: " + iterating_courses);
+                console.log("Sections: " + coursesCount);
 
                 // Start the For loop of doooooooomm
                 for (j; j < iterating_courses; j++) { 
