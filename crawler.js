@@ -12,6 +12,9 @@ var casper = require('casper').create({
     }
 });
 
+var u = casper.cli.get('u')
+var p = casper.cli.get('p')
+
 
 // print out all the messages in the headless browser context
 casper.on('remote.message', function(msg) {
@@ -30,8 +33,8 @@ casper.start(url, function() {
     console.log("page loaded");
  
     this.fill('form#Form1', { 
-        Username: '', 
-        Password:  ''
+        Username: u, 
+        Password: p
     }, false);
 });
 
