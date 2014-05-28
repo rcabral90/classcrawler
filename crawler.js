@@ -41,13 +41,8 @@ casper.start(url, function() {
     console.log("page loaded");
  
     this.fill('form#Form1', { 
-<<<<<<< HEAD
-        Username: 'cdoan', 
-        Password:  'Totoro3109'
-=======
-        Username: u, 
-        Password: p
->>>>>>> master
+        Username: '', 
+        Password:  ''
     }, false);
 });
 
