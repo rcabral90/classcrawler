@@ -110,7 +110,9 @@ casper.thenOpen('https://cmsweb.fullerton.edu/psc/HFULPRD/EMPLOYEE/HFULPRD/c/SA_
         casper.evaluate(function() {
              for (var i = 0; i < document.getElementsByClassName("SSSHYPERLINKBOLD").length; i++) { 
             courseName = document.getElementById("DERIVED_CLSRCH_DESCR200$"+i).innerText;
+            coursesInfo = document.getElementById("ACE_$ICField244$"+i).innerText;
             console.log("Class Name is: " + courseName);
+            console.log("Class Information is: " + coursesInfo);
               }
                     }); 
   
