@@ -66,14 +66,13 @@ casper.thenOpen('https://cmsweb.fullerton.edu/psc/HFULPRD/EMPLOYEE/HFULPRD/c/SA_
         }); 
     });
 
-/*
     // Selecting Spring 2014
        casper.then(function(){
         casper.evaluate(function() {
             var courses = document.getElementById("CLASS_SRCH_WRK2_STRM$44$").value = "2143"; //select option you're needed
         }); 
     }); 
-*/
+
 
     // Deselect "Show open classes only" box 
         casper.thenClick(x('//*[@id="SSR_CLSRCH_WRK_SSR_OPEN_ONLY$3"]'), function() {
@@ -181,7 +180,7 @@ casper.then(function(){
                         var class_instructor = class_information[2];
                         var class_dates = class_information[3];
 
-                        console.log("\nClass Information \n\tSection Count: " + section_count + "\n\tClass Section: " + class_section +"\n\tClass Status: " + class_status + "\n\tClass Time: " + class_time + "\n\tClass Room: " + class_room + "\n\tClass Instructor: " + class_instructor + "\n\tClass Dates: " + class_dates + "\n");
+                        console.log("Class Found.\nClass Information \n\tSection Count: " + section_count + "\n\tClass Section: " + class_section +"\n\tClass Status: " + class_status + "\n\tClass Time: " + class_time + "\n\tClass Room: " + class_room + "\n\tClass Instructor: " + class_instructor + "\n\tClass Dates: " + class_dates + "\n");
 
                 }
                 section_count = 0;
