@@ -11,8 +11,8 @@ var casper = require('casper').create({
     }
 });
 
-var u = casper.cli.get('u')
-var p = casper.cli.get('p')
+var u = casper.cli.get('u');
+var p = casper.cli.get('p');
 
 
 // print out all the messages in the headless browser context
@@ -71,7 +71,8 @@ casper.then(function() {
     // Select Fall Term 2014
     casper.then(function(){
         casper.evaluate(function() {
-            var term = document.getElementById("CLASS_SRCH_WRK2_STRM$45$").value = "2147"   //2147 = Fall 2014
+            var sel_term = "2147";
+            var term = document.getElementById("CLASS_SRCH_WRK2_STRM$45$").value = sel_term;   //2147 = Fall 2014
         });
     });
 
@@ -79,16 +80,18 @@ casper.then(function() {
     // Selecting SUBJECT... This case is for CPSC
        casper.then(function(){
         casper.evaluate(function() {
-            var courses = document.getElementById("SSR_CLSRCH_WRK_SUBJECT_SRCH$0").value = "CPSC"; //select option you're needed
-            console.log("Subject selected: CPSC")
+            var sel_course_subject = "CPSC";
+            var course_subject = document.getElementById("SSR_CLSRCH_WRK_SUBJECT_SRCH$0").value = sel_course_subject; //select option you're needed
+            console.log("Subject selected: " + sel_course_subject);
         });
     });
 
     // Select Course Career... Undergraduate
         casper.then(function(){
             casper.evaluate(function(){
-                var course_career = document.getElementById("SSR_CLSRCH_WRK_ACAD_CAREER$2").value = "UGRD";
-                console.log("Course Career selected: UGRD")
+                var sel_course_career = "UGRD";
+                var course_career = document.getElementById("SSR_CLSRCH_WRK_ACAD_CAREER$2").value = sel_course_career;
+                console.log("Course Career selected: " + sel_course_career);
             })
         })
 
@@ -96,7 +99,8 @@ casper.then(function() {
     // Deselect "Show Open Classes Only" box ~~~ Removed Click and used value change.
     casper.then(function(){
         casper.evaluate(function(){
-            var release_checked = document.getElementById("SSR_CLSRCH_WRK_SSR_OPEN_ONLY$chk$3").value = "N";
+            var sel_show_open_classes = "N";
+            var release_checked = document.getElementById("SSR_CLSRCH_WRK_SSR_OPEN_ONLY$chk$3").value = sel_show_open_classes;
             console.log("Deselecting 'Show Open Classes Only' checkbox");
         })
     })
@@ -104,7 +108,8 @@ casper.then(function() {
     // Selecting Matching Greater than
        casper.then(function(){
         casper.evaluate(function() {
-            var course_number = document.getElementById("SSR_CLSRCH_WRK_SSR_EXACT_MATCH1$1").value = "G"; //select option you're needed
+            var sel_course_number_selector = "G";
+            var course_number = document.getElementById("SSR_CLSRCH_WRK_SSR_EXACT_MATCH1$1").value = sel_course_number_selector; //select option you're needed
             console.log("Selecting Matching Greater Than");
         });
     }); 
@@ -112,8 +117,9 @@ casper.then(function() {
     // Input 0 
        casper.then(function(){
         casper.evaluate(function() {
-            var courses_number_value = document.getElementById("SSR_CLSRCH_WRK_CATALOG_NBR$1").value = 0 ; //select option you're needed
-            console.log("Inputting 0 as the course selection");
+            var sel_course_number = 0;
+            var courses_number_value = document.getElementById("SSR_CLSRCH_WRK_CATALOG_NBR$1").value = sel_course_number ; //select option you're needed
+            console.log("Inputting " + sel_course_number + " as the course selection");
         });
     }); 
     casper.then(function(){
@@ -147,12 +153,15 @@ casper.then(function() {
 
 // Clicking "show more than 50 OK" 
 casper.then(function(){
-        if(this.exists('input.PSPUSHBUTTONTBOK')){
+        console.log("Checking to see if there are over 50 classes.")
+
+        //if(this.exists('input.PSPUSHBUTTONTBOK')){
+        if(document.getElementsByName("#ICSave")){
             this.echo('There are more than 50 courses.');
 
             // CLick on the "Show more than 50" courses.
-            casper.thenClick(x('//*[@id="#ICSave"]'), function() {
-                console.log("Clicking Ok for Show more than 50!");
+            casper.thenClick(x('//*[@class="PSPUSHBUTTON"]'), function() {
+                console.log("Clicking Ok to show 50+ courses.");
             });
 
             casper.then(function(){  
@@ -166,7 +175,7 @@ casper.then(function(){
             this.echo('There are less than 50 courses.');
             casper.then(function(){   
                     this.wait(8500, function() {
-                    this.echo("I've waited for a second.");
+                    this.echo("I've waited for a second, now i'm capturing the CPSC listings.");
                     this.capture('cpsc list.png');
                 });
             });
@@ -177,8 +186,9 @@ casper.then(function(){
     //Print all classes name
        casper.then(function(){
             casper.evaluate(function() {
+                console.log("We have this many classes: " + document.getElementsByClassName("PSForm").length);
             for (var i = 0; i < document.getElementsByClassName("PABACKGROUNDINVISIBLEWBO").length; i++) {
-                courseName = document.getElementById("win0divSSR_CLSRSLT_WRK_GROUPBOX2GP$"+i).innerText;
+                courseName = document.getElementById("SSR_CLSRSLT_WRK_GROUPBOX2$"+i).innerText;
                 coursesCount = document.getElementById("ACE_$ICField105$"+i).innerText.split("-")[1].split(" ")[0];
                 console.log("Class Name is: " + courseName);
                 for (var j = 0; j <= coursesCount; j++) { 
